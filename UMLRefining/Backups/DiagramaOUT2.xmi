@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ER:Esquema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ER="ER">
+  <tablas nombre="Usuario"/>
+  <tablas nombre="Cliente"/>
+  <tablas nombre="Desarrollador"/>
+  <tablas nombre="App"/>
+  <tablas nombre="Version"/>
+  <tablas nombre="Compra"/>
+  <tablas nombre="Datos_Bancarios"/>
+</ER:Esquema>

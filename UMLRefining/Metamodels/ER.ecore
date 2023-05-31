@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ER" nsURI="ER" nsPrefix="ER">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Tabla" eSuperTypes="#//ENombre">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NombreNoNulo UnicaClavePriamria NombreDeColumnaUnico"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NombreNoNulo" value="not self.nombre.oclIsUndefined()"/>
+      <details key="UnicaClavePriamria" value="self.columnas->select(esPrimaria)->size() = 1"/>
+      <details key="NombreDeColumnaUnico" value="self.columnas->isUnique(nombre)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="esquema" lowerBound="1"
+        eType="#//Esquema" eOpposite="#//Esquema/tablas"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnas" upperBound="-1"
+        eType="#//Columna" containment="true" eOpposite="#//Columna/tabla"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Columna" eSuperTypes="#//ENombre">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NombreNoNulo"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NombreNoNulo" value="not self.nombre.oclIsUndefined()"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tabla" lowerBound="1" eType="#//Tabla"
+        eOpposite="#//Tabla/columnas"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tipo" eType="#//TipoDatosER"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="esPrimaria" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="claveAjena" eType="#//ClaveAjena"
+        eOpposite="#//ClaveAjena/columna"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="enClaveAjena" upperBound="-1"
+        eType="#//ClaveAjena" eOpposite="#//ClaveAjena/columnaReferenciada"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="esUnico" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rango" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TipoDatosER">
+    <eLiterals name="integer"/>
+    <eLiterals name="double" value="2"/>
+    <eLiterals name="string" value="1"/>
+    <eLiterals name="fecha" value="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Esquema" eSuperTypes="#//ENombre">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NobreClaveAjenaUnico NombreTablaUnico ClavesDistintas NombreNoNulo"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NobreClaveAjenaUnico" value="self.clavesAjenas->isUnique(nombre)"/>
+      <details key="NombreTablaUnico" value="self.tablas->isUnique(nombre)"/>
+      <details key="ClavesDistintas" value="self.clavesAjenas->forAll(ca1 : ClaveAjena, ca2 : ClaveAjena | ca1.columna = ca2.columna and ca1.columnaReferenciada = ca2.columnaReferenciada implies ca1 = ca2)"/>
+      <details key="NombreNoNulo" value="not self.nombre.oclIsUndefined()"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tablas" upperBound="-1"
+        eType="#//Tabla" containment="true" eOpposite="#//Tabla/esquema"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clavesAjenas" upperBound="-1"
+        eType="#//ClaveAjena" containment="true" eOpposite="#//ClaveAjena/esquema"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ClaveAjena" eSuperTypes="#//ENombre">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="OrigenDistintoDestino ColumnaReferenciaPrimaria NombreNoNulo ColumnaNoPrimaria TiposIguales"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="OrigenDistintoDestino" value="self.columna&lt;> self.columnaReferenciada"/>
+      <details key="ColumnaReferenciaPrimaria" value="self.columnaReferenciada.esPrimaria"/>
+      <details key="NombreNoNulo" value="not self.nombre.oclIsUndefined()"/>
+      <details key="ColumnaNoPrimaria" value="not self.columna.esPrimaria"/>
+      <details key="TiposIguales" value="self.columna.tipo=self.columnaReferenciada.tipo"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="esquema" lowerBound="1"
+        eType="#//Esquema" eOpposite="#//Esquema/clavesAjenas"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columna" lowerBound="1"
+        eType="#//Columna" eOpposite="#//Columna/claveAjena"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnaReferenciada" lowerBound="1"
+        eType="#//Columna" eOpposite="#//Columna/enClaveAjena"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ENombre">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

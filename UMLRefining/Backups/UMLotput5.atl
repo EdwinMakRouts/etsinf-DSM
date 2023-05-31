@@ -1,0 +1,54 @@
+-- @nsURI INMM=http://DC_UML
+-- @nsURI ERMM=ER
+
+module UMLotput;
+create OUT : ERMM from IN : INMM;
+
+helper context INMM!Atributo def: convierteTipo() : Relational!TipoDatosER =
+	if self.tipo = #entero then #integer else if self.tipo = #cadena then #string
+	else if self.tipo = #real then #double else #fecha endif endif endif;
+
+rule diagram2esquema {
+	from
+		diagrama: INMM!Diagrama
+	to 
+		esquema: ERMM!Esquema (
+			nombre <- diagrama.nombre,
+			tablas <- diagrama.clase
+	)
+}
+
+rule clase2tabla {
+	from
+		clase: INMM!Clase
+	to 
+		tabla: ERMM!Tabla (
+			nombre <- clase.nombre,
+			esquema <- clase.diagrama,
+			columnas <- columna
+	),
+		columna: ERMM!Columna (
+			nombre <- 'id_' + tabla.nombre,
+			tipo <- #integer,
+			esPrimaria <- true,
+			esUnico <- true,
+			rango <- 1,
+			tabla <- tabla
+	)
+}
+
+rule atributos2tabla {
+	from 
+		atributo : INMM!Atributo
+	to
+		columna : ERMM!Columna (
+			nombre <- atributo.nombre,
+			tipo <- atributo.convierteTipo(),
+			esPrimaria <- false,
+			esUnico <- false,
+			rango <- atributo.rango,
+			tabla <- atributo.clase
+	)
+}
+
+

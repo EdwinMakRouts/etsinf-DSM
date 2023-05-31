@@ -1,0 +1,14 @@
+-- @nsURI INMM=http://DC_UML
+-- @nsURI ERMM=ER
+
+module UMLotput;
+create OUT : ERMM from IN : INMM;
+
+rule diagram2esquema {
+	from
+		dia: INMM!Diagrama
+	to es: ERMM!Esquema (
+		nombre <- dia.nombre,
+		tablas <- dia.clase
+	)
+}

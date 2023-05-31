@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ER="ER">
+  <ER:Esquema>
+    <tablas nombre="Usuario">
+      <columnas nombre="id_Usuario" esPrimaria="true" enClaveAjena="/1" esUnico="true" rango="1"/>
+      <columnas nombre="contraseña" tipo="string" rango="1"/>
+      <columnas nombre="nombre_usaurio" tipo="string" rango="1"/>
+      <columnas nombre="correo_electronico" tipo="string" rango="1"/>
+    </tablas>
+    <tablas nombre="Cliente">
+      <columnas nombre="id_Cliente" esPrimaria="true" esUnico="true" rango="1"/>
+    </tablas>
+    <tablas nombre="Desarrollador">
+      <columnas nombre="id_Desarrollador" esPrimaria="true" esUnico="true" rango="1"/>
+      <columnas nombre="empresa" tipo="string" rango="1"/>
+    </tablas>
+    <tablas nombre="App">
+      <columnas nombre="id_App" esPrimaria="true" esUnico="true" rango="1"/>
+      <columnas nombre="cod" tipo="string" rango="1"/>
+      <columnas nombre="nombre" tipo="string" rango="1"/>
+      <columnas nombre="descripcion" tipo="string"/>
+      <columnas nombre="tipo_licencia" tipo="string" rango="1"/>
+    </tablas>
+    <tablas nombre="Version">
+      <columnas nombre="id_Version" esPrimaria="true" esUnico="true" rango="1"/>
+      <columnas nombre="num" tipo="string" rango="1"/>
+      <columnas nombre="nombre" tipo="string"/>
+      <columnas nombre="precio_base" tipo="double" rango="1"/>
+      <columnas nombre="fecha_lanzamiento" tipo="fecha" rango="1"/>
+    </tablas>
+    <tablas nombre="Compra">
+      <columnas nombre="id_Compra" esPrimaria="true" esUnico="true" rango="1"/>
+      <columnas nombre="fecha_compra" tipo="fecha" rango="1"/>
+      <columnas nombre="valoracion"/>
+    </tablas>
+    <tablas nombre="Datos_Bancarios">
+      <columnas nombre="id_Datos_Bancarios" esPrimaria="true" esUnico="true" rango="1"/>
+      <columnas nombre="num_tarjeta" rango="1"/>
+      <columnas nombre="fecha_validez" tipo="fecha" rango="1"/>
+      <columnas nombre="nombre_dueño" tipo="string" rango="1"/>
+      <columnas nombre="cvc"/>
+      <columnas nombre="id_FK_dueño" claveAjena="/1"/>
+    </tablas>
+  </ER:Esquema>
+  <ER:ClaveAjena nombre="FK_cuentas_dueño" columna="/0/@tablas.6/@columnas.5" columnaReferenciada="/0/@tablas.0/@columnas.0"/>
+</xmi:XMI>

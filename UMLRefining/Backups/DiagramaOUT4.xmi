@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ER:Esquema xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ER="ER">
+  <tablas nombre="Usuario">
+    <columnas nombre="id_Usuario" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="contraseña" rango="1"/>
+    <columnas nombre="nombre_usaurio" rango="1"/>
+    <columnas nombre="correo_electronico" rango="1"/>
+  </tablas>
+  <tablas nombre="Cliente">
+    <columnas nombre="id_Cliente" esPrimaria="true" esUnico="true" rango="1"/>
+  </tablas>
+  <tablas nombre="Desarrollador">
+    <columnas nombre="id_Desarrollador" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="empresa" rango="1"/>
+  </tablas>
+  <tablas nombre="App">
+    <columnas nombre="id_App" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="cod" rango="1"/>
+    <columnas nombre="nombre" rango="1"/>
+    <columnas nombre="descripcion"/>
+    <columnas nombre="tipo_licencia" rango="1"/>
+  </tablas>
+  <tablas nombre="Version">
+    <columnas nombre="id_Version" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="num" rango="1"/>
+    <columnas nombre="nombre"/>
+    <columnas nombre="precio_base" rango="1"/>
+    <columnas nombre="fecha_lanzamiento" rango="1"/>
+  </tablas>
+  <tablas nombre="Compra">
+    <columnas nombre="id_Compra" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="fecha_compra" rango="1"/>
+    <columnas nombre="valoracion"/>
+  </tablas>
+  <tablas nombre="Datos_Bancarios">
+    <columnas nombre="id_Datos_Bancarios" esPrimaria="true" esUnico="true" rango="1"/>
+    <columnas nombre="num_tarjeta" rango="1"/>
+    <columnas nombre="fecha_validez" rango="1"/>
+    <columnas nombre="nombre_dueño" rango="1"/>
+    <columnas nombre="cvc" rango="1"/>
+  </tablas>
+</ER:Esquema>
