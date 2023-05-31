@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/practica2/src-gen" creationIcons="false" editDirectory="/practica2.edit/src-gen"
+    editorDirectory="/practica2.editor/src-gen" modelPluginID="practica2" modelName="Practica2"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>practica2.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="Practica2" disposableProviderFactory="true" ecorePackage="practica2.ecore#/">
+    <genClasses ecoreClass="practica2.ecore#//Clase">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Clase/tiene"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Clase/dispone"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Clase/padre"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Clase/hijos"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//Atributo">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Atributo/pertence"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Atributo/asignado"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference practica2.ecore#//Atributo/compuesto"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//TipoDato">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//TipoDato/corresponde"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//Asociacion">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference practica2.ecore#//Asociacion/relaciona"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference practica2.ecore#//Asociacion/posee"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//ElementoModelado">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute practica2.ecore#//ElementoModelado/nombre"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//Cardinalidad">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute practica2.ecore#//Cardinalidad/num1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute practica2.ecore#//Cardinalidad/num2"/>
+    </genClasses>
+    <genClasses ecoreClass="practica2.ecore#//Modelo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference practica2.ecore#//Modelo/contiene"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference practica2.ecore#//Modelo/coge"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

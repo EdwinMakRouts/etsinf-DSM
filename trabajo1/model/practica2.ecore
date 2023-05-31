@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="practica2" nsURI="practica2" nsPrefix="practica2">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="Clase" eSuperTypes="#//ElementoModelado">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NoHayAtributosRepetidos NoCicloHerencia"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NoHayAtributosRepetidos" value="self.compone->isUnique(nombre)"/>
+      <details key="NoCicloHerencia" value="self.hijo->excludes(self.padre)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compone" upperBound="-1"
+        eType="#//Atributo" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dispone" upperBound="-1"
+        eType="#//RelacionFin" eOpposite="#//RelacionFin/relaciona"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hijo" upperBound="-1" eType="#//Clase"
+        eOpposite="#//Clase/padre"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="padre" upperBound="-1"
+        eType="#//Clase" eOpposite="#//Clase/hijo"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Atributo" eSuperTypes="#//ElementoModelado">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compuesto" lowerBound="1"
+        eType="#//Cardinalidad" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="corresponde" lowerBound="1"
+        eType="#//TipoDato" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TipoDato" eSuperTypes="#//ElementoModelado"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Relacion" eSuperTypes="#//ElementoModelado">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NoHayRolesRepetidos"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NoHayRolesRepetidos" value="self.es->isUnique(nombre)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="es" lowerBound="1" upperBound="-1"
+        eType="#//RelacionFin" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementoModelado">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nombre" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cardinalidad">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="Num1MenorIgualNum2 Num1IgualOMayorQue0"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="Num1MenorIgualNum2" value="self.num1.toInteger() &lt;= self.num2.toInteger()"/>
+      <details key="Num1IgualOMayorQue0" value="self.num1.toInteger() >= 0"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="num1" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="num2" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Modelo">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="NoHayClasesRepetidas"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="NoHayClasesRepetidas" value="self.coge->isUnique(nombre)"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contiene" upperBound="-1"
+        eType="#//Relacion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="coge" upperBound="-1" eType="#//Clase"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RelacionFin" eSuperTypes="#//ElementoModelado">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="asigna" lowerBound="1"
+        eType="#//Cardinalidad" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relaciona" lowerBound="1"
+        upperBound="-1" eType="#//Clase" eOpposite="#//Clase/dispone"/>
+  </eClassifiers>
+</ecore:EPackage>

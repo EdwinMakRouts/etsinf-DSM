@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<practica2:Modelo
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:practica2="practica2"
+    xsi:schemaLocation="practica2 practica2.ecore">
+  <contiene
+      nombre="pertenece">
+    <es nombre="dueño"
+        relaciona="//@coge.0">
+      <asigna
+          num1="1"
+          num2="1"/>
+    </es>
+    <es nombre="cuentas"
+        relaciona="//@coge.1">
+      <asigna
+          num1="0"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+  </contiene>
+  <contiene
+      nombre="desarrolla">
+    <es nombre="creador"
+        relaciona="//@coge.3">
+      <asigna
+          num1="0"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+    <es nombre="creacion"
+        relaciona="//@coge.4">
+      <asigna
+          num1="0"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+  </contiene>
+  <contiene
+      nombre="tiene">
+    <es nombre="app"
+        relaciona="//@coge.4">
+      <asigna
+          num1="1"
+          num2="1"/>
+    </es>
+    <es nombre="producto"
+        relaciona="//@coge.5">
+      <asigna
+          num1="1"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+  </contiene>
+  <contiene
+      nombre="compra1">
+    <es nombre="comprador"
+        relaciona="//@coge.2">
+      <asigna
+          num1="1"
+          num2="1"/>
+    </es>
+    <es nombre="compra_un"
+        relaciona="//@coge.6">
+      <asigna
+          num1="0"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+  </contiene>
+  <contiene
+      nombre="compra2">
+    <es nombre="articulo"
+        relaciona="//@coge.5">
+      <asigna
+          num1="1"
+          num2="1"/>
+    </es>
+    <es nombre="compra_un"
+        relaciona="//@coge.6">
+      <asigna
+          num1="0"
+          num2="99999999999999999999999999999999999999999999999999999999999999999999999999999999999999"/>
+    </es>
+  </contiene>
+  <coge nombre="Usuario"
+      dispone="//@contiene.0/@es.0"
+      hijo="//@coge.2 //@coge.3">
+    <compone
+        nombre="nombre_usuario">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="contraseña">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="correo_electronico">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+  </coge>
+  <coge nombre="Datos_Bancarios"
+      dispone="//@contiene.0/@es.1">
+    <compone
+        nombre="num_tarjeta">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="INT"/>
+    </compone>
+    <compone
+        nombre="fecha_validez">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="DATE"/>
+    </compone>
+    <compone
+        nombre="nombre_dueño">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="cvc">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="SHORT"/>
+    </compone>
+  </coge>
+  <coge nombre="Cliente"
+      dispone="//@contiene.3/@es.0"
+      padre="//@coge.0"/>
+  <coge nombre="Desarrollador"
+      dispone="//@contiene.1/@es.0"
+      padre="//@coge.0">
+    <compone
+        nombre="empresa">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+  </coge>
+  <coge nombre="App"
+      dispone="//@contiene.1/@es.1 //@contiene.2/@es.0">
+    <compone
+        nombre="cod">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="nombre">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="descripcion">
+      <compuesto
+          num1="0"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="tipo_licencia">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+  </coge>
+  <coge nombre="Version"
+      dispone="//@contiene.2/@es.1 //@contiene.4/@es.0">
+    <compone
+        nombre="num">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="nombre">
+      <compuesto
+          num1="0"
+          num2="1"/>
+      <corresponde
+          nombre="STRING"/>
+    </compone>
+    <compone
+        nombre="precio_base">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="FLOAT"/>
+    </compone>
+    <compone
+        nombre="fecha_lanzamiento">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="DATE"/>
+    </compone>
+  </coge>
+  <coge nombre="Compra"
+      dispone="//@contiene.3/@es.1 //@contiene.4/@es.1">
+    <compone
+        nombre="fecha_compra">
+      <compuesto
+          num1="1"
+          num2="1"/>
+      <corresponde
+          nombre="DATE"/>
+    </compone>
+    <compone
+        nombre="valoracion">
+      <compuesto
+          num1="0"
+          num2="1"/>
+      <corresponde
+          nombre="SHORT"/>
+    </compone>
+  </coge>
+</practica2:Modelo>
