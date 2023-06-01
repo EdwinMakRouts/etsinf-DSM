@@ -1,0 +1,125 @@
+-- @nsURI INMM=http://DC_UML
+-- @nsURI ERMM=ER
+
+module UMLotput;
+create OUT : ERMM from IN : INMM;
+
+helper context INMM!Atributo def: convierteTipo() : Relational!TipoDatosER =
+	if self.tipo = #entero then #integer else if self.tipo = #cadena then #string
+	else if self.tipo = #real then #double else #fecha endif endif endif;
+
+rule diagram2esquema {
+	from
+		diagrama: INMM!Diagrama
+	to 
+		esquema: ERMM!Esquema (
+			nombre <- diagrama.nombre,
+			tablas <- diagrama.clase
+	)
+}
+
+rule clase2tabla {
+	from
+		clase: INMM!Clase
+	to 
+		tabla: ERMM!Tabla (
+			nombre <- clase.nombre,
+			esquema <- clase.diagrama,
+			columnas <- columna
+	),
+		columna: ERMM!Columna (
+			nombre <- 'id_' + tabla.nombre,
+			tipo <- #integer,
+			esPrimaria <- true,
+			esUnico <- true,
+			rango <- 1,
+			tabla <- tabla
+	)
+}
+
+rule atributos2tabla {
+	from 
+		atributo : INMM!Atributo
+	to
+		columna : ERMM!Columna (
+			nombre <- atributo.nombre,
+			tipo <- atributo.convierteTipo(),
+			esPrimaria <- false,
+			esUnico <- false,
+			rango <- atributo.rango,
+			tabla <- atributo.clase
+	)
+}
+
+rule asociacion2ClaveAjena {
+	from 
+		asociacion: INMM!Asociacion (asociacion.finAsociacion.first().max.intValue() = 1 and 
+			asociacion.claseasociacion.oclIsUndefined())
+	to
+		claveAjena: ERMM!ClaveAjena (
+			nombre <- 'FK_' + asociacion.finAsociacion.last().rol + '_' + asociacion.finAsociacion.first().rol,
+			columna <- claveAjenaColumna,
+			columnaReferenciada <- thisModule.resolveTemp(asociacion.finAsociacion.first().clase, 'columna'),
+			esquema <- claveAjena.esquema
+		),
+		claveAjenaColumna: ERMM!Columna (
+			nombre <- 'id_FK_' + asociacion.finAsociacion.first().rol,
+			tabla <- asociacion.finAsociacion.last().clase
+		)
+}
+
+rule herencia2tabla {
+	from
+		clase: INMM!Clase (not clase.generaliza.oclIsUndefined())
+	to 
+		tabla: ERMM!Tabla (
+			nombre <- clase.nombre,
+			esquema <- clase.diagrama,
+			columnas <- columna
+		),
+		columna: ERMM!Columna (
+			nombre <- 'id_' + clase.generaliza.nombre,
+			tipo <- #integer,
+			esPrimaria <- true,
+			esUnico <- true,
+			rango <- 1,
+			enClaveAjena <- claveAjena
+		),
+		claveAjena: ERMM!ClaveAjena (
+			nombre <- 'FK_' + clase.nombre + '_' + clase.generaliza.nombre,
+			columna <- claveAjenaColumnna,
+			columnaReferenciada <-  thisModule.resolveTemp(clase.generaliza, 'columnas')->any(c|c.nombre = 'id_' + clase.generaliza.nombre),
+			esquema <- tabla.esquema
+		),
+		claveAjenaColumnna: ERMM!Columna (
+			nombre <- 'id_FK_' + clase.generaliza.nombre,
+			tabla <- tabla
+		)
+}
+
+rule clavesAjenas2ClasesAsociacion {
+	from
+		asociacion: INMM!Asociacion (
+			not asociacion.claseasociacion.oclIsUndefined()
+		)
+	to
+		claveAjenaFirst: ERMM!ClaveAjena (
+			nombre <- 'FK_' + asociacion.claseasociacion.nombre + '_' + asociacion.finAsociacion.first().rol,
+			columnaReferenciada <- thisModule.resolveTemp(asociacion.finAsociacion.first().clase, 'columna'),
+			columna <- columnaClaveAjenaFirst
+		),
+		claveAjenaLast: ERRM!ClaveAjena (
+			nombre <- 'FK_' + asociacion.claseasociacion.nombre + '_' + asociacion.finAsociacion.last().rol,
+			columnaReferenciada <- thisModule.resolveTemp(asociacion.finAsociacion.last().clase, 'columna'),
+			columna <- columnaClaveAjenaLast,
+			esquema <- claveAjenaFirst.esquema
+		),
+		columnaClaveAjenaFirst: ERMM!Columna (
+			nombre <- 'id_FK_' + asociacion.finAsociacion.first().rol,
+			tabla <- asociacion.claseasociacion
+		),
+		columnaClaveAjenaLast: ERMM!Columna (
+			nombre <- 'id_FK_' + asociacion.finAsociacion.last().rol,
+			tabla <- asociacion.claseasociacion	
+		)
+}

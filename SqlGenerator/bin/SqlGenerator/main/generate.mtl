@@ -1,0 +1,55 @@
+[comment encoding = UTF-8 /]
+[module generate('ER')]
+
+
+[template public generateElement(anEsquema : Esquema)]
+[comment @main/]
+
+[file (anEsquema.nombre.concat('.sql'), false, 'UTF-8')]
+DROP DATABASE IF EXISTS [anEsquema.nombre/];
+CREATE DATABASE [anEsquema.nombre/];
+USE [anEsquema.nombre/];
+DROP SCHEMA IF EXISTS [anEsquema.nombre/];
+CREATE SCHEMA [anEsquema.nombre/];
+
+[for (t: Tabla | anEsquema.tablas) separator ('\n')]
+DROP TABLE IF EXISTS [t.nombre/];
+[/for]
+
+[for (t: Tabla | anEsquema.tablas) separator ('\n')]
+CREATE TABLE [t.nombre/]
+(
+	[for (c:Columna | t.columnas) separator ('\n')]
+		[if not (t.columnas -> last() = c)]
+	[c.nombre/] [obtenerTipo (c.tipo)/] [esPrimaria (c)/],
+		[/if]
+	[/for]
+	[t.columnas->last().nombre/] [obtenerTipo(t.columnas->last().tipo)/] [esPrimaria(t.columnas->last())/][for (c:Columna | t.columnas)][for (fk: ClaveAjena | c.enClaveAjena)],['\n'/] 
+	CONSTRAINT [fk.nombre/] FOREIGN KEY ([c.nombre/]) REFERENCES [fk.columnaReferenciada.tabla.nombre/] ([fk.columnaReferenciada.nombre/])
+		[/for]
+	[/for]
+);
+[/for]
+
+
+[/file] 
+[/template]
+
+[query public obtenerTipo(tipo : TipoDatosER) : String = 
+if tipo = TipoDatosER::integer then 'INTEGER' else 
+if tipo = TipoDatosER::double then 'REAL' else 
+if tipo = TipoDatosER::fecha then 'DATE' else 'VARCHAR(75)'
+endif
+endif 
+endif
+/]
+
+[query public esPrimaria (c: Columna): String =
+if c.esPrimaria = true then 'PRIMARY KEY' else 
+if c.rango = 1 and c.esUnico then 'NOT NULL UNIQUE' else 
+if c.rango = 1 then 'NOT NULL' else ''
+endif
+endif
+endif
+/]
+

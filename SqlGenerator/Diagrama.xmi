@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DC_UML:Diagrama
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:DC_UML="http://DC_UML"
+    xsi:schemaLocation="http://DC_UML /SqlGenerator/DC_Uml.ecore"
+    nombre="UML">
+  <clase nombre="Usuario"
+      finrelacion="//@relacion.1/@finAsociacion.0"
+      especializa="//@clase.2 //@clase.1">
+    <atributo
+        nombre="contraseña"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="nombre_usaurio"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="correo_electronico"
+        tipo="cadena"
+        rango="1"/>
+  </clase>
+  <clase nombre="Cliente"
+      finrelacion="//@relacion.0/@finAsociacion.0"
+      generaliza="//@clase.0"/>
+  <clase nombre="Desarrollador"
+      finrelacion="//@relacion.2/@finAsociacion.0"
+      generaliza="//@clase.0">
+    <atributo
+        nombre="empresa"
+        tipo="cadena"
+        rango="1"/>
+  </clase>
+  <clase nombre="App"
+      finrelacion="//@relacion.2/@finAsociacion.1">
+    <atributo
+        nombre="cod"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="nombre"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="descripcion"
+        tipo="cadena"
+        nulo="true"/>
+    <atributo
+        nombre="tipo_licencia"
+        tipo="cadena"
+        rango="1"/>
+  </clase>
+  <clase nombre="Version"
+      finrelacion="//@relacion.0/@finAsociacion.1">
+    <atributo
+        nombre="num"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="nombre"
+        tipo="cadena"
+        nulo="true"/>
+    <atributo
+        nombre="precio_base"
+        tipo="real"
+        rango="1"/>
+    <atributo
+        nombre="fecha_lanzamiento"
+        tipo="fecha"
+        rango="1"/>
+  </clase>
+  <clase nombre="Datos_Bancarios"
+      finrelacion="//@relacion.1/@finAsociacion.1">
+    <atributo
+        nombre="num_tarjeta"
+        rango="1"/>
+    <atributo
+        nombre="fecha_validez"
+        tipo="fecha"
+        rango="1"/>
+    <atributo
+        nombre="nombre_dueño"
+        tipo="cadena"
+        rango="1"/>
+    <atributo
+        nombre="cvc"/>
+  </clase>
+  <clase xsi:type="DC_UML:ClaseAsociacion"
+      nombre="Compra"
+      asociacion="//@relacion.0"/>
+  <relacion
+      nombre="compra_un"
+      claseasociacion="//@clase.6">
+    <finAsociacion
+        clase="//@clase.1"
+        rol="comprador"
+        max="99999"/>
+    <finAsociacion
+        clase="//@clase.4"
+        rol="articulo"
+        max="99999"/>
+  </relacion>
+  <relacion
+      nombre="pertenece">
+    <finAsociacion
+        clase="//@clase.0"
+        rol="dueño"
+        min="1"
+        max="1"/>
+    <finAsociacion
+        clase="//@clase.5"
+        rol="cuentas"
+        max="99999"/>
+  </relacion>
+  <relacion
+      nombre="desarrolla">
+    <finAsociacion
+        clase="//@clase.2"
+        rol="creador"
+        max="99999"/>
+    <finAsociacion
+        clase="//@clase.3"
+        rol="creacion"
+        max="99999"/>
+  </relacion>
+</DC_UML:Diagrama>
